@@ -1,1 +1,26 @@
-<p>emp works!</p>
+<div class="container">
+    <h1 class="text-center">Dolgozók</h1>
+</div>
+
+
+<table class="table table-striped mt-4">
+    
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Név</th>
+            <th>Település</th>
+            <th>Fizetés</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (emp of employees; track emp.id) {
+            <tr>
+                <td>{{emp.id}}</td>
+                <td>{{emp.name}}</td>
+                <td>{{emp.city}}</td>
+                <td>{{emp.salary}}</td>
+            </tr>
+        }
+    </tbody>
+</table>
