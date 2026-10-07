@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { EmployeeService } from '../shared/employee.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { PositionService } from '../shared/position.service';
 
 @Component({
   selector: 'app-emp',
@@ -10,11 +11,13 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 })
 export class EmpComponent {
   employeeApi = inject(EmployeeService);
+  positionApi = inject(PositionService);
   cdr = inject(ChangeDetectorRef);
   builder = inject(FormBuilder);
 
 
   employees: any[] = [];
+  positions: any[] = [];
   showModal = false;
   empForm = this.builder.group({
     id: ['',],
@@ -26,16 +29,33 @@ export class EmpComponent {
   addMode = true;
 
   ngOnInit() {
-    this.showEmployees();
+    this.getEmployees();
+    this.getPositions();
   }
-  showEmployees() {
+  getEmployees() {
     this.employeeApi.getEmployees().subscribe({
       next: (res: any) => {
         console.log(res.data);
         this.employees = res.data;
         this.cdr.detectChanges();
       },
-      error: () => {}
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  getPositions() {
+    this.positionApi.getPosition().subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.positions = res.data;
+        this.cdr.detectChanges();
+      }
+      ,
+      error: (err) => {
+        console.log(err);
+      }
     })
   }
 
@@ -55,7 +75,7 @@ export class EmpComponent {
       this.updateEmployee();
     }
     this.startCloseModal();
-    this.showEmployees();
+    this.getEmployees();
   }
 
   addEmployee() {

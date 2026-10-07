@@ -50,9 +50,9 @@ data-bs-toggle="modal"
           <div>
             <label for="" class="form-label">Beosztás</label>
             <select class="form-select" id="positionId" formControlName="positionId">
-              <option value="1">Fejlesztő</option>
-              <option value="2">Tesztelő</option>
-              <option value="3">Takarító</option>
+              @for(pos of positions ; track pos.id) {
+              <option value="{{pos.id}}">{{pos.name}}</option>
+              }
             </select>
           </div>
           
