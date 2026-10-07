@@ -4,12 +4,17 @@ import { inject, Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class EmployeeService {
     host = 'http://localhost:8000';
     http = inject(HttpClient);
 
     getEmployees() {
-      let url = `${this.host}/api/employees/`;
+      let url = `${this.host}/api/employees`;
       return this.http.get(url);
+    }
+
+    createEmployee(emp: any) {
+      let url = `${this.host}/api/employees`;
+      return this.http.post(url, emp);
     }
 }

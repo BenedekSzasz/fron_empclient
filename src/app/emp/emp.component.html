@@ -1,55 +1,99 @@
 <div class="container">
-    <h1 class="text-center">Dolgozók</h1>
+  <h1 class="text-center">Dolgozók</h1>
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" 
-        class="btn btn-primary m-2" 
-        data-bs-toggle="modal" 
-        data-bs-target="#exampleModal"
-        >
-  Új Dolgozó Hozzáadása
+<button type="button" class="btn btn-primary m-2" (click)="startShowModal()" 
+data-bs-toggle="modal"
+  data-bs-target="#exampleModal">
+  Hozzáadás
 </button>
 
+
+@if (showModal) {
+
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  style="display: block;">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Hozzáadás</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" 
+        id="exampleModalLabel">Hozzáadás</h1>
+        <button type="button" class="btn-close" 
+        aria-label="Close" (click)="startCloseModal()"></button>
       </div>
       <div class="modal-body">
-        ...
+
+
+        
+        <form [formGroup]="empForm" (ngSubmit)="save()" id="empForm">
+
+          @if (!addMode) {
+          <div>
+            <label for="id" class="form-label">ID</label>
+            <input type="text" class="form-control" formControlName="id" readonly id="id">
+          </div>
+          }
+          <div>
+            <label for="name" class="form-label">Név</label>
+            <input type="text" class="form-control" formControlName="name" id="name">
+          </div>
+          <div>
+            <label for="city" class="form-label">Település</label>
+            <input type="text" class="form-control" formControlName="city" id="city">
+          </div>
+          <div>
+            <label for="salary" class="form-label">Fizetés</label>
+            <input type="text" class="form-control" formControlName="salary" id="salary">
+          </div>
+          <div>
+            <label for="" class="form-label">Beosztás</label>
+            <select class="form-select" id="positionId" formControlName="positionId">
+              <option value="1">Fejlesztő</option>
+              <option value="2">Tesztelő</option>
+              <option value="3">Takarító</option>
+            </select>
+          </div>
+          
+        </form>
+
+
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" 
+        (click)="startCloseModal()">Bezárás</button>
+
+        <button type="submit" class="btn btn-primary" 
+        form="empForm">Mentés</button>
       </div>
     </div>
   </div>
 </div>
 
+<div class="modal-backdrop fade show"></div>
+}
+
+
 <table class="table table-striped mt-4">
-    
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Név</th>
-            <th>Település</th>
-            <th>Fizetés</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (emp of employees; track emp.id) {
-            <tr>
-                <td>{{emp.id}}</td>
-                <td>{{emp.name}}</td>
-                <td>{{emp.city}}</td>
-                <td>{{emp.salary}}</td>
-            </tr>
-        }
-    </tbody>
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Név</th>
+      <th>Település</th>
+      <th>Fizetés</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (emp of employees; track emp.id) {
+    <tr>
+      <td>{{emp.id}}</td>
+      <td>{{emp.name}}</td>
+      <td>{{emp.city}}</td>
+      <td>{{emp.salary}}</td>
+    </tr>
+    }
+  </tbody>
 </table>
-
-
